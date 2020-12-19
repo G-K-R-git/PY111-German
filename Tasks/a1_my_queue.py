@@ -23,7 +23,7 @@ def dequeue() -> Any:
     :return: dequeued element
     """
     if len(_queue):
-        return _queue[0]
+        return _queue.pop(0)
 
 
 def peek(ind: int = 0) -> Any:
@@ -34,7 +34,8 @@ def peek(ind: int = 0) -> Any:
     :return: peeked element
     """
     print(ind)
-    return None
+    if 0 <= ind < len(_queue):
+        return _queue[ind]
 
 
 def clear() -> None:
@@ -43,4 +44,4 @@ def clear() -> None:
 
     :return: None
     """
-    return None
+    _queue.clear()
