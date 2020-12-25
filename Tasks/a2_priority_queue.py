@@ -25,18 +25,11 @@ def dequeue() -> Any:
 
     :return: dequeued element
     """
-    if len(_queue):
-        while not _queue[min(_queue.keys())]:
+    while len(_queue):
+        if len(_queue[min(_queue.keys())]):
+            return _queue[min(_queue.keys())].pop(0)
+        else:
             _queue.pop(min(_queue.keys()))
-        return _queue[min(_queue.keys())].pop(0)
-
-
-    # if len(_queue):
-    #     if len(_queue[min(_queue.keys())]):
-    #         return _queue[min(_queue.keys())].pop(0)
-    #     else:
-    #         _queue.pop(min(_queue.keys()))
-    #         return _queue[min(_queue.keys())].pop(0)
 
 
 def peek(ind: int = 0, priority: int = 0) -> Any:
