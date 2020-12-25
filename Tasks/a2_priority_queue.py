@@ -15,8 +15,7 @@ def enqueue(elem: Any, priority: int = 0) -> None:
     :param elem: element to be added
     :return: Nothing
     """
-    if priority not in _queue:
-        _queue[priority] = []
+    _queue.setdefault(priority, [])
     _queue[priority].append(elem)
 
 
@@ -27,11 +26,17 @@ def dequeue() -> Any:
     :return: dequeued element
     """
     if len(_queue):
-        if len(_queue[min(_queue.keys())]):
-            return _queue[min(_queue.keys())].pop(0)
-        else:
+        while not _queue[min(_queue.keys())]:
             _queue.pop(min(_queue.keys()))
-            return _queue[min(_queue.keys())].pop(0)
+        return _queue[min(_queue.keys())].pop(0)
+
+
+    # if len(_queue):
+    #     if len(_queue[min(_queue.keys())]):
+    #         return _queue[min(_queue.keys())].pop(0)
+    #     else:
+    #         _queue.pop(min(_queue.keys()))
+    #         return _queue[min(_queue.keys())].pop(0)
 
 
 def peek(ind: int = 0, priority: int = 0) -> Any:
