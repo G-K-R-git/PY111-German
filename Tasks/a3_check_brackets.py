@@ -5,5 +5,12 @@ def check_brackets(brackets_row: str) -> bool:
     :param brackets_row: input string to be checked
     :return: True if valid, False otherwise
     """
-
-    return False
+    balance = 0
+    for i in brackets_row:
+        if i == '(':
+            balance += 1
+        elif i == ')':
+            balance += -1
+            if balance < 0:
+                return False
+    return balance == 0
