@@ -55,6 +55,16 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(0, priority_queue.dequeue())
         self.assertEqual(1, priority_queue.dequeue())
 
+    def test_en_de_queue_empty(self):
+        priority_queue.enqueue(1, 0)
+        priority_queue.enqueue(2, 3)
+        priority_queue.enqueue(3, 1)
+        priority_queue.enqueue(4, 1)
+        self.assertEqual(1, priority_queue.dequeue())
+        self.assertEqual(3, priority_queue.dequeue())
+        self.assertEqual(4, priority_queue.dequeue())
+        self.assertEqual(2, priority_queue.dequeue())
+        self.assertIsNone(priority_queue.dequeue())
 
 if __name__ == '__main__':
     unittest.main()
