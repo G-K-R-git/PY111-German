@@ -9,29 +9,20 @@ def binary_search(elem: int, arr: Sequence) -> Optional[int]:
     :param arr: array where element is to be found
     :return: Index of element if it's presented in the arr, None otherwise
     """
-    if (len(arr) == 0) or (len(arr) == 1 and arr[0] != elem) or (elem < arr[0]) or (elem > arr[len(arr)-1]):
-        return None
-    elif len(arr) == 1 and arr[0] == elem:
-        return 0
 
-    part = arr
-    result = 0
-    while len(part) > 2:
-        ind = len(part) // 2
-        val = part[ind]
-        if elem < val:
-            part = part[:ind]
-        elif elem > val:
-            part = part[ind:]
-            result += ind
+    half = len(arr) // 2
+    left = 0
+    right = len(arr) - 1
+    while arr[half] != elem and left <= right:
+        if elem < arr[half]:
+            right = half - 1
         else:
-            part = part[:ind + 1]
-        if len(part) == 2 and part[1] == elem:
-            return result+1
-        elif len(part) <= 2 and part[0] == elem:
-            return result
-        elif len(part) <= 2 and part[0] != elem:
-            return None
+            left = half + 1
+        half = (left + right) // 2
 
-    print(elem, arr)
-    return result
+    if left > right:
+        return None
+    else:
+        while arr[half] == arr[half - 1]:
+            half -= 1
+        return half
