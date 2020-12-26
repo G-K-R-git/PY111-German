@@ -11,13 +11,5 @@ def min_search(arr: Sequence) -> int:
     :param arr: Array containing numbers
     :return: index of first occurrence of minimal element in array
     """
-    min_val = arr[0]
-    count = 0
-    ind = 0
-    for i in arr:
-        if min_val > i:
-            min_val = i
-            ind = count
-        count += 1
     print(arr)
-    return ind
+    return -1
