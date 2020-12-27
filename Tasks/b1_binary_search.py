@@ -22,6 +22,8 @@ def binary_search(elem: int, arr: Sequence) -> Optional[int]:
 
     if left > right:
         return None
+    elif arr[0] == arr[len(arr)-1]:
+        return 0
     else:
         while arr[half] == arr[half - 1]:
             half -= 1
