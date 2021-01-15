@@ -16,9 +16,7 @@ def bfs(g: nx.Graph, start_node: Hashable) -> List[Hashable]:
     while len(the_order) < len(g.nodes):
         for node in current_portion:
             for next_node in g.neighbors(node):
-                if next_node in the_order:
-                    pass
-                else:
+                if next_node not in the_order:
                     the_order.append(next_node)
                     next_portion.append(next_node)
         current_portion = next_portion
