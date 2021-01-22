@@ -3,9 +3,9 @@ You can do it either with networkx ('cause tree is a graph)
 or with dicts (smth like {'key': 0, value: 123, 'left': {...}, 'right':{...}})
 """
 
+import random
+import time
 from typing import Any, Optional, Tuple
-# import networkx as nx
-
 
 _root = {}
 
@@ -68,11 +68,25 @@ def remove(key: int) -> Optional[Tuple[int, Any]]:
     if not _root:
         return None
     else:
-        found, node = _find(key)
+        found, the_node = _find(key)
         if not found:
             return None
         else:
-            remove_if_found(node)
+            remove_if_found(the_node)
+
+
+def copy_node(node1, node2: dict):
+    """
+    Copy all pairs of key: value from one node to another
+
+    :param node1: target node
+    :param node2: source node
+    :return:
+    """
+    node1['key'] = node2['key']
+    node1['value'] = node2['value']
+    node1['left'] = node2['left']
+    node1['right'] = node2['right']
 
 
 def remove_if_found(node: dict):
@@ -85,14 +99,16 @@ def remove_if_found(node: dict):
     if not node['left'] and not node['right']:
         node.clear()
     elif not node['left']:
-        node = node['right']
-        remove_if_found(node['right'])
+        next_node = node['right']
+        copy_node(node, next_node)
     elif not node['right']:
-        node = node['left']
-        remove_if_found(node['left'])
+        next_node = node['left']
+        copy_node(node, next_node)
     else:
         current_node = node['right']
         if not current_node['left']:
+            node['key'] = current_node['key']
+            node['value'] = current_node['value']
             remove_if_found(current_node)
         else:
             min_in_branch = current_node['left']
@@ -126,19 +142,56 @@ def clear() -> None:
     _root.clear()
 
 
-if __name__ == '__main__':
+def test_all_nodes():
+    """
+    Test all nodes in random order
+
+    :return:
+    """
     clear()
-    insert(50, "blabla1")
-    insert(25, "blabla2")
-    insert(75, "blabla3")
-    insert(62, "blabla4")
-    insert(87, "blabla5")
-    insert(56, "blabla6")
-    insert(68, "blabla7")
-    insert(81, "blabla8")
-    insert(93, "blabla9")
+    insert(50, "Num1")
+    insert(25, "Num2")
+    insert(75, "Num3")
+    insert(62, "Num4")
+    insert(87, "Num5")
+    insert(56, "Num6")
+    insert(68, "Num7")
+    insert(81, "Num8")
+    insert(93, "Num9")
+    insert(20, "Num10")
+    insert(30, "Num11")
     print('Initial: ', _root)
+    start = time.time()
+    i, j = 0, 0
+    # order = [i for i in random.randrange(0, 100, 1)]
+    while len(_root) != 0:
+        j += 1
+        random.seed()
+        item = random.randrange(0, 100, 1)
+        found, node = _find(item)
+        if found:
+            i += 1
+            remove(item)
+            print(f'{i})', f'After deletinf of {item}: {_root}')
+    print(time.time() - start, "Number of iterations: ", j)
+
+
+def test_some_nodes():
+    """
+    Test some special cases
+
+    :return:
+    """
+    clear()
+    insert(75, "Num1")
+    insert(68, "Num2")
+    insert(93, "Num2")
+    # insert(83, "Num2")
+    print(_root)
     remove(75)
-    print('After delete 75: ', _root)  # On the place of 75 must be 81
-    remove(50)
-    print('Root delete: ', _root)  # Root delete. New root must be 56
+    print(_root)
+
+
+if __name__ == '__main__':
+    test_all_nodes()
+    test_some_nodes()
