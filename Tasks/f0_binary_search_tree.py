@@ -86,10 +86,10 @@ def remove_if_found(node: dict):
         node.clear()
     elif not node['left']:
         node = node['right']
-        return None
+        remove_if_found(node['right'])
     elif not node['right']:
         node = node['left']
-        return None
+        remove_if_found(node['left'])
     else:
         current_node = node['right']
         if not current_node['left']:
@@ -127,14 +127,6 @@ def clear() -> None:
 
 
 if __name__ == '__main__':
-    insert(42, 'The meaning of life, the universe and everything.')
-    insert(0, 'ZERO!')
-    insert(13, "Devil's sign here")
-    insert(43, "blabla")
-    insert(60, "blabla")
-    insert(44, "blabla")
-    insert(55, "blabla")
-    # print(_root)
     clear()
     insert(50, "blabla1")
     insert(25, "blabla2")
